@@ -180,7 +180,6 @@ var darkGrey = "#8c8c8c";
 		{
 		var column = cell[0].charCodeAt(0) - 65;
 		var row = parseInt(parseInt(cell[cell.length-1])-1);
-		var loopCounter = 0;
 		cells[column][row].theAttackPoints = 0;
 		cells[column][row].theDefensePoints = 0;
 		//--------------------------------
@@ -218,29 +217,20 @@ var darkGrey = "#8c8c8c";
 				};
 			}
 		};
-		/*
-
-		//--------------------------
-		//Diagonal Check - NE and SW
-		//--------------------------
-		total = 0;
-		connections=[];
 		//--------------------------
 		//Diagonal Check - Northeast
 		//--------------------------
-		for(i=1; i<4; i++)
+		for(var i=1; i<4; i++)
 		{
 			if((column-i)>=0 && (column-i)<=5 && (row+i)>=0 && (row+i)<=6)
 			{
 				if(cells[column-i][row+i].theStatus==2 && cells[column-i][row+i].theControl==player)
 				{
-					total++;
-					connections.push(cells[column-i][row+i].theID);
-					checkForConnectFour(total);
+					cells[column][row].theAttackPoints++;
 				}
-				else
+				else if(cells[column-i][row+i].theStatus==2 && cells[column-i][row+i].theControl==opponent)
 				{
-				break;
+					cells[column][row].theDefensePoints++;
 				}
 			};
 		};
@@ -248,42 +238,36 @@ var darkGrey = "#8c8c8c";
 		//--------------------------
 		//Diagonal Check - Southwest
 		//--------------------------
-		for(i=1; i<4; i++)
+		for(var i=1; i<4; i++)
 		{
 			if((column+i)>=0 && (column+i)<=5 && (row-i)>=0 && (row-i)<=6)
 			{
-			if((cells[column+i][row-i].theStatus==2) && (cells[column+i][row-i].theControl==player))
+				if(cells[column+i][row-i].theStatus==2 && cells[column+i][row-i].theControl==player)
 				{
-					total++;
-					connections.push(cells[column+i][row-i].theID);
-					checkForConnectFour(total);
+					cells[column][row].theAttackPoints++;
 				}
-			else
+				else if(cells[column+i][row-i].theStatus==2 && cells[column+i][row-i].theControl==opponent)
 				{
-				break;
+					cells[column][row].theDefensePoints++;
 				}
 			};
 		};
-
+		
 		//----------------------
 		//Vertical Check - South
 		//----------------------
-		total = 0;
-		connections=[];
-		for(i=1; i<4; i++)
+		for(var i=1; i<4; i++)
 		{
 			if((column+i)>=0 && (column+i)<=5)
 			{
 				{
-					if((cells[column+i][row].theStatus==2) && (cells[column+i][row].theControl==player))
+					if(cells[column+i][row].theStatus==2 && cells[column+i][row].theControl==player)
 					{
-						total++;
-						connections.push(cells[column+i][row].theID);
-						checkForConnectFour(total);
+						cells[column][row].theAttackPoints++;
 					}
-					else
+					else(cells[column+i][row].theStatus==2 && cells[column+i][row].theControl==opponent)
 					{
-					break;
+						cells[column][row].theDefensePoints++;
 					}
 				};
 			};
@@ -296,15 +280,13 @@ var darkGrey = "#8c8c8c";
 		{
 			if((column-i)>=0 && (column-i)<=5)
 			{
-				if((cells[column-i][row].theStatus==2) && (cells[column-i][row].theControl==player))
+				if(cells[column-i][row].theStatus==2 && cells[column-i][row].theControl==player)
 				{
-					total++;
-					connections.push(cells[column-i][row].theID);
-					checkForConnectFour(total);
+					cells[column][row].theAttackPoints++;
 				}
-				else
+				else if(cells[column-i][row].theStatus==2 && cells[column-i][row].theControl==opponent)
 				{
-				break;
+					cells[column][row].theDefensePoints++;
 				}
 			};
 		};
@@ -312,21 +294,17 @@ var darkGrey = "#8c8c8c";
 		//-----------------------
 		//Horizontal Check - West
 		//-----------------------
-		total = 0;
-		connections=[];
 		for(i=1; i<4; i++)
 		{
 			if((row-i)>=0 && (row-i)<=6)
 			{
-				if((cells[column][row-i].theStatus==2) && (cells[column][row-i].theControl==player))
+				if(cells[column][row-i].theStatus==2 && cells[column][row-i].theControl==player)
 				{
-					total++;
-					connections.push(cells[column][row-i].theID);
-					checkForConnectFour(total);
+					cells[column][row].theAttackPoints++;
 				}
-				else
+				else if(cells[column][row-i].theStatus==2 && cells[column][row-i].theControl==opponent)
 				{
-				break;
+					cells[column][row].theDefensePoints++;
 				}
 			};
 		};
@@ -338,19 +316,17 @@ var darkGrey = "#8c8c8c";
 		{
 			if((row+i)>=0 && (row+i)<=6)
 			{
-				if((cells[column][row+i].theStatus==2) && (cells[column][row+i].theControl==player))
+				if(cells[column][row+i].theStatus==2 && cells[column][row+i].theControl==player)
 				{
-					total++;
-					connections.push(cells[column][row+i].theID);
-					checkForConnectFour(total);
+					cells[column][row].theAttackPoints++;
 				}
-				else
+				else if(cells[column][row+i].theStatus==2 && cells[column][row+i].theControl==opponent)
 				{
-				break;
+					cells[column][row].theDefensePoints++;
 				}
 			};
 		};	
-		*/
+		
 		for(var i=0; i<openCells.length; i++)
 		{
 			if(openCells[i].theAttackPoints>0 || openCells[i].theDefensePoints>0)
@@ -377,9 +353,7 @@ var darkGrey = "#8c8c8c";
 				if(attackEntry.theAttackPoints > highestAttackValue)
 				{
 					highestAttackValue = attackEntry.theAttackPoints;
-					console.log("The highestAttackValue is " + highestAttackValue + ". That is: " + attackEntry.theID + ", which contains the highest attack value: " + attackEntry.theAttackPoints);
 					highestAttackCell = attackEntry.theID;
-					
 				}
 				if(defenseEntry.theDefensePoints > highestDefenseValue)
 				{
@@ -391,12 +365,12 @@ var darkGrey = "#8c8c8c";
 			
 				if(highestDefenseValue > highestAttackValue)
 				{
-					console.log("Returning " + highestDefenseCell + " because " + highestDefenseValue + " is greater than " + highestAttackValue);
+					console.log("Using Defense Cell " + highestDefenseCell);
 					return highestDefenseCell;
 				}
 				else
 				{
-					console.log("Returning " + highestAttackCell + " because " + highestAttackValue + " is greater than " + highestDefenseValue);
+					console.log("Using Attack Cell " + highestAttackCell);
 					return highestAttackCell;
 				}
 		}
@@ -456,7 +430,6 @@ function mouseOutColor(cell)
 var connections = [];
 function selectCell(cell)
 {
-	console.log("Cell equals " + cell);
 	clearAvailableCells();
 	var target = document.getElementById(cell);
 	var column = cell[0].charCodeAt(0) - 65;
