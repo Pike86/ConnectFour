@@ -1,0 +1,54 @@
+
+:root{
+	--darkGreen: #157145;
+	--lightGreen: #57A773;
+	--darkBlue: #6A8EAE;
+	--lightBlue: #9BD1E5;
+	--whiteBlue: #D1FAFF;
+	--lightGrey: #f2f2f2;
+	--darkGrey: #8c8c8c;
+}
+
+html
+{
+	background-color:darkgrey;
+}
+table
+{
+	border-collapse: separate;
+	border-spacing: 10px;
+	background-color: black;
+}
+td
+{
+	border:1px solid black;
+	background-color:var(--darkGrey);
+	width:12.5vw;
+	height:12.5vh;
+	padding: 10px;
+	transition-duration:1s;
+}
+
+.firstRow
+{
+	background-color:var(--lightGrey);
+}
+
+.color-transition{
+	transition-duration:1s;
+}
+
+.playerOne{
+	background-color:red;
+};
+
+.playerTwo{
+	background-color:purple;
+};
+	
+td:hover
+{
+	background-color:blue;
+	transition:0.75s;
+	border:solid blue 1px;
+}

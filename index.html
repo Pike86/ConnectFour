@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="ConnectFour.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<body>
+<table>
+	<tr>
+		<td onmouseover="hoverColor('A1')" onmouseout="mouseOutColor('A1')" onmousedown="selectCell('A1')" id="A1"></td>
+		<td onmouseover="hoverColor('A2')" onmouseout="mouseOutColor('A2')" onmousedown="selectCell('A2')" id="A2"></td>
+		<td onmouseover="hoverColor('A3')" onmouseout="mouseOutColor('A3')" onmousedown="selectCell('A3')" id="A3"></td>
+		<td onmouseover="hoverColor('A4')" onmouseout="mouseOutColor('A4')" onmousedown="selectCell('A4')" id="A4"></td>
+		<td onmouseover="hoverColor('A5')" onmouseout="mouseOutColor('A5')" onmousedown="selectCell('A5')" id="A5"></td>
+		<td onmouseover="hoverColor('A6')" onmouseout="mouseOutColor('A6')" onmousedown="selectCell('A6')" id="A6"></td>
+		<td onmouseover="hoverColor('A7')" onmouseout="mouseOutColor('A7')" onmousedown="selectCell('A7')" id="A7"></td>
+	</tr>
+	<tr>
+		<td onmouseover="hoverColor('B1')" onmouseout="mouseOutColor('B1')" onmousedown="selectCell('B1')" id="B1"></td>
+		<td onmouseover="hoverColor('B2')" onmouseout="mouseOutColor('B2')" onmousedown="selectCell('B2')" id="B2"></td>
+		<td onmouseover="hoverColor('B3')" onmouseout="mouseOutColor('B3')" onmousedown="selectCell('B3')" id="B3"></td>
+		<td onmouseover="hoverColor('B4')" onmouseout="mouseOutColor('B4')" onmousedown="selectCell('B4')" id="B4"></td>
+		<td onmouseover="hoverColor('B5')" onmouseout="mouseOutColor('B5')" onmousedown="selectCell('B5')" id="B5"></td>
+		<td onmouseover="hoverColor('B6')" onmouseout="mouseOutColor('B6')" onmousedown="selectCell('B6')" id="B6"></td>
+		<td onmouseover="hoverColor('B7')" onmouseout="mouseOutColor('B7')" onmousedown="selectCell('B7')" id="B7"></td>
+	</tr>
+	<tr>
+		<td onmouseover="hoverColor('C1')" onmouseout="mouseOutColor('C1')" onmousedown="selectCell('C1')" id="C1"></td>
+		<td onmouseover="hoverColor('C2')" onmouseout="mouseOutColor('C2')" onmousedown="selectCell('C2')" id="C2"></td>
+		<td onmouseover="hoverColor('C3')" onmouseout="mouseOutColor('C3')" onmousedown="selectCell('C3')" id="C3"></td>
+		<td onmouseover="hoverColor('C4')" onmouseout="mouseOutColor('C4')" onmousedown="selectCell('C4')" id="C4"></td>
+		<td onmouseover="hoverColor('C5')" onmouseout="mouseOutColor('C5')" onmousedown="selectCell('C5')" id="C5"></td>
+		<td onmouseover="hoverColor('C6')" onmouseout="mouseOutColor('C6')" onmousedown="selectCell('C6')" id="C6"></td>
+		<td onmouseover="hoverColor('C7')" onmouseout="mouseOutColor('C7')" onmousedown="selectCell('C7')" id="C7"></td>
+	</tr>
+	<tr>
+		<td onmouseover="hoverColor('D1')" onmouseout="mouseOutColor('D1')" onmousedown="selectCell('D1')" id="D1"></td>
+		<td onmouseover="hoverColor('D2')" onmouseout="mouseOutColor('D2')" onmousedown="selectCell('D2')" id="D2"></td>
+		<td onmouseover="hoverColor('D3')" onmouseout="mouseOutColor('D3')" onmousedown="selectCell('D3')" id="D3"></td>
+		<td onmouseover="hoverColor('D4')" onmouseout="mouseOutColor('D4')" onmousedown="selectCell('D4')" id="D4"></td>
+		<td onmouseover="hoverColor('D5')" onmouseout="mouseOutColor('D5')" onmousedown="selectCell('D5')" id="D5"></td>
+		<td onmouseover="hoverColor('D6')" onmouseout="mouseOutColor('D6')" onmousedown="selectCell('D6')" id="D6"></td>
+		<td onmouseover="hoverColor('D7')" onmouseout="mouseOutColor('D7')" onmousedown="selectCell('D7')" id="D7"></td>
+	</tr>
+	<tr>
+		<td onmouseover="hoverColor('E1')" onmouseout="mouseOutColor('E1')" onmousedown="selectCell('E1')" id="E1"></td>
+		<td onmouseover="hoverColor('E2')" onmouseout="mouseOutColor('E2')" onmousedown="selectCell('E2')" id="E2"></td>
+		<td onmouseover="hoverColor('E3')" onmouseout="mouseOutColor('E3')" onmousedown="selectCell('E3')" id="E3"></td>
+		<td onmouseover="hoverColor('E4')" onmouseout="mouseOutColor('E4')" onmousedown="selectCell('E4')" id="E4"></td>
+		<td onmouseover="hoverColor('E5')" onmouseout="mouseOutColor('E5')" onmousedown="selectCell('E5')" id="E5"></td>
+		<td onmouseover="hoverColor('E6')" onmouseout="mouseOutColor('E6')" onmousedown="selectCell('E6')" id="E6"></td>
+		<td onmouseover="hoverColor('E7')" onmouseout="mouseOutColor('E7')" onmousedown="selectCell('E7')" id="E7"></td>
+	</tr>
+	<tr>
+		<td onmouseover="hoverColor('F1')" onmouseout="mouseOutColor('F1')" onmousedown="selectCell('F1')" id="F1" class="firstRow"></td>
+		<td onmouseover="hoverColor('F2')" onmouseout="mouseOutColor('F2')" onmousedown="selectCell('F2')" id="F2" class="firstRow"></td>
+		<td onmouseover="hoverColor('F3')" onmouseout="mouseOutColor('F3')" onmousedown="selectCell('F3')" id="F3" class="firstRow"></td>
+		<td onmouseover="hoverColor('F4')" onmouseout="mouseOutColor('F4')" onmousedown="selectCell('F4')" id="F4" class="firstRow"></td>
+		<td onmouseover="hoverColor('F5')" onmouseout="mouseOutColor('F5')" onmousedown="selectCell('F5')" id="F5" class="firstRow"></td>
+		<td onmouseover="hoverColor('F6')" onmouseout="mouseOutColor('F6')" onmousedown="selectCell('F6')" id="F6" class="firstRow"></td>
+		<td onmouseover="hoverColor('F7')" onmouseout="mouseOutColor('F7')" onmousedown="selectCell('F7')" id="F7" class="firstRow"></td>
+	</tr>
+</table>
+<script src="ConnectFour.js"></script>
+</body>
+</html>
