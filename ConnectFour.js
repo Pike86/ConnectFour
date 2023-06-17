@@ -14,6 +14,14 @@ var darkGrey = "#8c8c8c";
 //========================
 
 	//-----------------------
+	//Console Log With Indent
+	//-----------------------
+	function logWithIndentation(message, indentLevel) {
+	  const indent = ' '.repeat(indentLevel * 2); // Adjust the number of spaces per indent level as needed
+	  console.log(`${indent}${message}`);
+	}
+
+	//-----------------------
 	//Random Number Generator
 	//-----------------------
 	function getRandomInt(min, max)
@@ -30,7 +38,9 @@ var darkGrey = "#8c8c8c";
 		this.theStatus = active;
 		this.theControl = control;
 		this.theAttackPoints = 0;
+		this.theCurrentAttackPoints = 0;
 		this.theDefensePoints = 0;
+		this.theCurrentDefensePoints = 0;
 	}
 
 	//------------------------
@@ -122,6 +132,37 @@ var darkGrey = "#8c8c8c";
 	//Variables
 	//---------
 	var openCells=[];
+	var direction=
+	[
+		//-----------
+		//North-South
+		//-----------
+			//N
+			[-1,0,"N"],
+			//S
+			[1,0,"S"],
+		//-------------------
+		//Northeast-Southwest
+		//-------------------
+			//NE
+			[-1,1,"NE"],
+			//SW
+			[1,-1,"SW"],
+		//---------
+		//East-West
+		//---------
+			//E
+			[0,1,"E"],
+			//W
+			[0,-1,"W"],
+		//-------------------
+		//Southeast-Northwest
+		//-------------------
+			//SE
+			[1,1,"SE"],
+			//NW
+			[-1,-1,"NW"]
+	];
 	
 	//---------
 	//Functions
@@ -180,163 +221,83 @@ var darkGrey = "#8c8c8c";
 		{
 		var column = cell[0].charCodeAt(0) - 65;
 		var row = parseInt(parseInt(cell[cell.length-1])-1);
+		//General Points
 		cells[column][row].theAttackPoints = 0;
 		cells[column][row].theDefensePoints = 0;
-		//--------------------------------
-		//Diagonal Measurement - Northwest
-		//--------------------------------
-		for(var i=1; i<4; i++)
-		{
-			if((column-i)>=0 && (column-i)<=5 && (row-i)>=0 && (row-i)<=6)
-			{
-				if(cells[column-i][row-i].theStatus==2 && cells[column-i][row-i].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column-i][row-i].theStatus==2 && cells[column-i][row-i].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				}
-			}
-		};
-			
-		//--------------------------
-		//Diagonal Check - Southeast
-		//--------------------------
-		for(var i=1; i<4; i++)
-		{
-			if((column+i)>=0 && (column+i)<=5 && (row+i)>=0 && (row+i)<=6)
-			{
-				if(cells[column+i][row+i].theStatus==2 && cells[column+i][row+i].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column+i][row+i].theStatus==2 && cells[column+i][row+i].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				};
-			}
-		};
-		//--------------------------
-		//Diagonal Check - Northeast
-		//--------------------------
-		for(var i=1; i<4; i++)
-		{
-			if((column-i)>=0 && (column-i)<=5 && (row+i)>=0 && (row+i)<=6)
-			{
-				if(cells[column-i][row+i].theStatus==2 && cells[column-i][row+i].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column-i][row+i].theStatus==2 && cells[column-i][row+i].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				}
-			};
-		};
-			
-		//--------------------------
-		//Diagonal Check - Southwest
-		//--------------------------
-		for(var i=1; i<4; i++)
-		{
-			if((column+i)>=0 && (column+i)<=5 && (row-i)>=0 && (row-i)<=6)
-			{
-				if(cells[column+i][row-i].theStatus==2 && cells[column+i][row-i].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column+i][row-i].theStatus==2 && cells[column+i][row-i].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				}
-			};
-		};
-		
-		//----------------------
-		//Vertical Check - South
-		//----------------------
-		for(var i=1; i<4; i++)
-		{
-			if((column+i)>=0 && (column+i)<=5)
-			{
-				{
-					if(cells[column+i][row].theStatus==2 && cells[column+i][row].theControl==player)
-					{
-						cells[column][row].theAttackPoints++;
-					}
-					else(cells[column+i][row].theStatus==2 && cells[column+i][row].theControl==opponent)
-					{
-						cells[column][row].theDefensePoints++;
-					}
-				};
-			};
-		};
-		
-		//----------------------
-		//Vertical Check - North
-		//----------------------
-		for(i=1; i<4; i++)
-		{
-			if((column-i)>=0 && (column-i)<=5)
-			{
-				if(cells[column-i][row].theStatus==2 && cells[column-i][row].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column-i][row].theStatus==2 && cells[column-i][row].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				}
-			};
-		};
-		
-		//-----------------------
-		//Horizontal Check - West
-		//-----------------------
-		for(i=1; i<4; i++)
-		{
-			if((row-i)>=0 && (row-i)<=6)
-			{
-				if(cells[column][row-i].theStatus==2 && cells[column][row-i].theControl==player)
-				{
-					cells[column][row].theAttackPoints++;
-				}
-				else if(cells[column][row-i].theStatus==2 && cells[column][row-i].theControl==opponent)
-				{
-					cells[column][row].theDefensePoints++;
-				}
-			};
-		};
+		//Current Points
+		cells[column][row].theCurrentAttackPoints = 0;
+		cells[column][row].theCurrentDefensePoints = 0;
 
-		//-----------------------
-		//Horizontal Check - East
-		//-----------------------
-		for(i=1; i<4; i++)
+		console.log("=========================");
+		console.log("MEASURE VALUE FIRES FOR " + cells[column][row].theID);
+		console.log("=========================");
+		for(var a=0; a<direction.length; a++)
 		{
-			if((row+i)>=0 && (row+i)<=6)
+			var i = 0;
+			console.log(" ");
+			logWithIndentation("~~~~~~~~~~~~~", 1);
+			logWithIndentation(cells[column][row].theID + " measure " + direction[a][2], 1);
+			logWithIndentation("~~~~~~~~~~~~~", 1);
+			console.log(" ");
+			for(var i=1; i<4; i++)
 			{
-				if(cells[column][row+i].theStatus==2 && cells[column][row+i].theControl==player)
+			var columnCheck = column+(direction[a][0]*i);
+			var rowCheck = row+(direction[a][1]*i);
+				if
+				(
+					(columnCheck>=0) 
+					&& 
+					(columnCheck<=5)
+					&&
+					(rowCheck>=0) 
+					&& 
+					(rowCheck<=6)
+				)
 				{
-					cells[column][row].theAttackPoints++;
+					var currentCell = cells[column][row];
+					var checkedCell = cells[columnCheck][rowCheck];
+					console.log(columnCheck + " is >= 0 and <= 5");
+					console.log(rowCheck + " is >= 0 and <= 6");
+					if
+					(
+						checkedCell.theStatus==2
+						&&
+						checkedCell.theControl==player
+					)
+					{
+						currentCell.theAttackPoints+=i;
+						logWithIndentation(currentCell.theID + " " + direction[a][2]*i + ": " + checkedCell.theID + " " + checkedCell.theStatus,1);
+						console.log(currentCell.theID + " Attack Value: " + currentCell.theAttackPoints);
+					}
+					else if
+					(
+						checkedCell.theStatus==2
+						&&
+						checkedCell.theControl==opponent
+					)
+					{
+						cells[column][row].theDefensePoints+=i;
+						logWithIndentation(currentCell.theID + " " + direction[a][2] + ": " + checkedCell.theStatus,1);
+						console.log(currentCell.theID + " Defense Value: " + currentCell.theDefensePoints);
+					}
+					else
+					{
+						console.log("BREAK");
+						break;
+						//logWithIndentation(cells[column][row].theID + " " + direction[a][2] + ": " + cells[column+direction[a][0]][row+direction[a][1]].theID + " " + cells[column+direction[a][0]][row+direction[a][1]].theStatus,1);
+					}
 				}
-				else if(cells[column][row+i].theStatus==2 && cells[column][row+i].theControl==opponent)
+				else
 				{
-					cells[column][row].theDefensePoints++;
+					logWithIndentation("Column Check: columnCheck*i = " + columnCheck);
+					logWithIndentation("Column Check > " + (columnCheck > 0))
+					logWithIndentation("Row Check: " + rowCheck);
+					logWithIndentation("Out of Range",1);
 				}
-			};
-		};	
-		
-		for(var i=0; i<openCells.length; i++)
-		{
-			if(openCells[i].theAttackPoints>0 || openCells[i].theDefensePoints>0)
-			{
-			console.log("Attack Points " + openCells[i].theID + " " + openCells[i].theAttackPoints);
-			console.log("Defense Points " + openCells[i].theID + " " + openCells[i].theDefensePoints);
 			}
-		}
 		};
 		
+		};
 		function rankCells()
 		{
 			var highestAttackValue = -Infinity;
@@ -346,32 +307,30 @@ var darkGrey = "#8c8c8c";
 			
 			for(var i = 0; i < openCells.length; i++)
 			{
-				console.log("Ranking for Cell " + i);
 				var attackEntry = openCells[i];
 				var defenseEntry = openCells[i];
 				
 				if(attackEntry.theAttackPoints > highestAttackValue)
 				{
 					highestAttackValue = attackEntry.theAttackPoints;
-					highestAttackCell = attackEntry.theID;
+					highestAttackCell = attackEntry;
 				}
 				if(defenseEntry.theDefensePoints > highestDefenseValue)
 				{
 					highestDefenseValue = defenseEntry.theDefensePoints;
-					console.log(defenseEntry + " contains the highest defense value: " + defenseEntry.theDefensePoints);
-					highestDefenseCell = defenseEntry.theID;
+					highestDefenseCell = defenseEntry;
 				}
 			}
 			
 				if(highestDefenseValue > highestAttackValue)
 				{
-					console.log("Using Defense Cell " + highestDefenseCell);
-					return highestDefenseCell;
+					console.log("Using Defense Cell " + highestDefenseCell.theID + "(" + highestDefenseCell.theDefensePoints + ") because it outweighs the highest attack cell, " + highestAttackCell.theID + "(" + highestAttackCell.theAttackPoints + ")");
+					return highestDefenseCell.theID;
 				}
 				else
 				{
-					console.log("Using Attack Cell " + highestAttackCell);
-					return highestAttackCell;
+					console.log("Using Attack Cell " + highestAttackCell.theID + "(" + highestAttackCell.theAttackPoints + ")");
+					return highestAttackCell.theID;
 				}
 		}
 		//--------------------------------
