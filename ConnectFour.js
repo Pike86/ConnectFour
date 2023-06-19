@@ -284,7 +284,6 @@ var darkGrey = "#8c8c8c";
 					{
 						console.log("BREAK");
 						break;
-						//logWithIndentation(cells[column][row].theID + " " + direction[a][2] + ": " + cells[column+direction[a][0]][row+direction[a][1]].theID + " " + cells[column+direction[a][0]][row+direction[a][1]].theStatus,1);
 					}
 				}
 				else
@@ -340,8 +339,6 @@ var darkGrey = "#8c8c8c";
 		{
 			var AISelection = rankCells();
 			selectCell(AISelection);
-			//var AISelection = getRandomInt(0,openCells.length);
-			//selectCell(openCells[AISelection].theID);
 			openCells=[];	
 		}
 
@@ -446,7 +443,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 		{
 			total++;
 			connections.push(cells[column-i][row-i].theID);
-			checkForConnectFour(total);
+			checkForConnectFour(total,column,row);
 		}
 		}
 		else
@@ -465,7 +462,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column+i][row+i].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			};
 		}
 	};
@@ -486,7 +483,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column-i][row+i].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			}
 			else
 			{
@@ -506,7 +503,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column+i][row-i].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			}
 		else
 			{
@@ -529,7 +526,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 				{
 					total++;
 					connections.push(cells[column+i][row].theID);
-					checkForConnectFour(total);
+					checkForConnectFour(total,column,row);
 				}
 				else
 				{
@@ -550,7 +547,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column-i][row].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			}
 			else
 			{
@@ -572,7 +569,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column][row-i].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			}
 			else
 			{
@@ -592,7 +589,7 @@ var row = parseInt(parseInt(cell[cell.length-1])-1);
 			{
 				total++;
 				connections.push(cells[column][row+i].theID);
-				checkForConnectFour(total);
+				checkForConnectFour(total,column,row);
 			}
 			else
 			{
@@ -610,13 +607,21 @@ else
 			
 };
 
-function checkForConnectFour(cellEntry)
+function checkForConnectFour(cellEntry,col,ro)
 {
+	var theColumn = col;
+	var theRow = ro;
 	var theTotal = cellEntry;
 	if(theTotal > 2)
 	{
 		alert("Connect Four");
+		connections.push(cells[theColumn][theRow].theID)
 		console.log("Connect Four " + connections);
+		for(i=0; i<connections.length; i++)
+		{
+			document.getElementById(connections[i]).style.backgroundColor="red";
+		}
+
 	}
 };
 
