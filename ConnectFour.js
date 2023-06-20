@@ -619,9 +619,15 @@ function checkForConnectFour(cellEntry,col,ro)
 		console.log("Connect Four " + connections);
 		for(i=0; i<connections.length; i++)
 		{
-			document.getElementById(connections[i]).style.backgroundColor="red";
+			if(player==0)
+			{
+			document.getElementById(connections[i]).style.backgroundColor="#00cc00";
+			}
+			else
+			{
+			document.getElementById(connections[i]).style.backgroundColor="#0000ff";
+			}
 		}
-
 	}
 };
 
