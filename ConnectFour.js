@@ -417,9 +417,9 @@ function selectCell(cell)
 			above.style.backgroundColor=lightGrey;
 		};
 		
-//======================
-//Check For Connect Four
-//======================
+//=================================
+//Prepare to Check For Connect Four
+//=================================
 function countConnections(entry)
 {	
 cell = entry;
@@ -427,176 +427,53 @@ var target = document.getElementById(cell);
 var column = cell[0].charCodeAt(0) - 65;
 var row = parseInt(parseInt(cell[cell.length-1])-1);
 
-//--------------------------
-//Diagonal Check - NW and SE
-//--------------------------
 	var total = 0;
 	connections = [];
-	//--------------------------
-	//Diagonal Check - Northwest
-	//--------------------------
-	for(i=1; i<4; i++)
-	{
-		if((column-i)>=0 && (column-i)<=5 && (row-i)>=0 && (row-i)<=6)
+	for(var a=0; a<direction.length; a++)
 		{
-		if((cells[column-i][row-i].theStatus==2) && (cells[column-i][row-i].theControl==player))
-		{
-			total++;
-			connections.push(cells[column-i][row-i].theID);
-			checkForConnectFour(total,column,row);
-		}
-		}
-		else
-		{
-		}
-	};
-		
-	//--------------------------
-	//Diagonal Check - Southeast
-	//--------------------------
-	for(i=1; i<4; i++)
-	{
-		if((column+i)>=0 && (column+i)<=5 && (row+i)>=0 && (row+i)<=6)
-		{
-		if((cells[column+i][row+i].theStatus==2) && (cells[column+i][row+i].theControl==player))
+			//Check if a is even. If so, set the 'total' variable to 0 and the 'connections' array to blank, then proceed.
+			//For context, the "direction" array is organized to check 'N', then its opposite 'S', and so on in clockwise order, until all compass directions are accounted for. So you check 3 cells "up", then 3 cells "down", and determine if the total exceeds "4", indicating a connect four. Then start over so as to not overcount. 
+			if(a % 2 === 0)
 			{
-				total++;
-				connections.push(cells[column+i][row+i].theID);
-				checkForConnectFour(total,column,row);
-			};
-		}
-	};
-
-//--------------------------
-//Diagonal Check - NE and SW
-//--------------------------
-	total = 0;
-	connections=[];
-	//--------------------------
-	//Diagonal Check - Northeast
-	//--------------------------
-	for(i=1; i<4; i++)
-	{
-		if((column-i)>=0 && (column-i)<=5 && (row+i)>=0 && (row+i)<=6)
-		{
-			if(cells[column-i][row+i].theStatus==2 && cells[column-i][row+i].theControl==player)
-			{
-				total++;
-				connections.push(cells[column-i][row+i].theID);
-				checkForConnectFour(total,column,row);
+				total=0;
+				connections = [];
 			}
-			else
+			for(var i=1; i<4; i++)
 			{
-			break;
-			}
-		};
-	};
-		
-	//--------------------------
-	//Diagonal Check - Southwest
-	//--------------------------
-	for(i=1; i<4; i++)
-	{
-		if((column+i)>=0 && (column+i)<=5 && (row-i)>=0 && (row-i)<=6)
-		{
-		if((cells[column+i][row-i].theStatus==2) && (cells[column+i][row-i].theControl==player))
-			{
-				total++;
-				connections.push(cells[column+i][row-i].theID);
-				checkForConnectFour(total,column,row);
-			}
-		else
-			{
-			break;
-			}
-		};
-	};
-
-//----------------------
-//Vertical Check - South
-//----------------------
-	total = 0;
-	connections=[];
-	for(i=1; i<4; i++)
-	{
-		if((column+i)>=0 && (column+i)<=5)
-		{
-			{
-				if((cells[column+i][row].theStatus==2) && (cells[column+i][row].theControl==player))
+				var columnCheck = column + (direction[a][0]*i);
+				var rowCheck = row + (direction[a][1]*i);
+				//First Check if var i is in Range
+				if
+				(
+					(columnCheck>=0)
+					&&
+					(columnCheck<=5)
+					&&
+					(rowCheck>=0)
+					&&
+					(rowCheck<=6)
+				)
 				{
-					total++;
-					connections.push(cells[column+i][row].theID);
-					checkForConnectFour(total,column,row);
+					var currentCell = cells[column][row];
+					var checkedCell = cells[columnCheck][rowCheck];
+					if
+					(
+						checkedCell.theStatus==2
+						&&
+						checkedCell.theControl==player
+					)
+					{
+						total++;
+						connections.push(checkedCell.theID);
+						checkForConnectFour(total,column,row);
+					}
+					else
+					{
+					}
 				}
-				else
-				{
-				break;
-				}
-			};
-		};
-	};
-	
-//----------------------
-//Vertical Check - North
-//----------------------
-	for(i=1; i<4; i++)
-	{
-		if((column-i)>=0 && (column-i)<=5)
-		{
-			if((cells[column-i][row].theStatus==2) && (cells[column-i][row].theControl==player))
-			{
-				total++;
-				connections.push(cells[column-i][row].theID);
-				checkForConnectFour(total,column,row);
+					
 			}
-			else
-			{
-			break;
-			}
-		};
-	};
-	
-//-----------------------
-//Horizontal Check - West
-//-----------------------
-	total = 0;
-	connections=[];
-	for(i=1; i<4; i++)
-	{
-		if((row-i)>=0 && (row-i)<=6)
-		{
-			if((cells[column][row-i].theStatus==2) && (cells[column][row-i].theControl==player))
-			{
-				total++;
-				connections.push(cells[column][row-i].theID);
-				checkForConnectFour(total,column,row);
-			}
-			else
-			{
-			break;
-			}
-		};
-	};
-
-//-----------------------
-//Horizontal Check - East
-//-----------------------
-	for(i=1; i<4; i++)
-	{
-		if((row+i)>=0 && (row+i)<=6)
-		{
-			if((cells[column][row+i].theStatus==2) && (cells[column][row+i].theControl==player))
-			{
-				total++;
-				connections.push(cells[column][row+i].theID);
-				checkForConnectFour(total,column,row);
-			}
-			else
-			{
-			break;
-			}
-		};
-	};	
+		}
 }
 	
 }
@@ -607,6 +484,9 @@ else
 			
 };
 
+//======================
+//Check for Connect Four
+//======================
 function checkForConnectFour(cellEntry,col,ro)
 {
 	var theColumn = col;
@@ -617,15 +497,15 @@ function checkForConnectFour(cellEntry,col,ro)
 		alert("Connect Four");
 		connections.push(cells[theColumn][theRow].theID)
 		console.log("Connect Four " + connections);
-		for(i=0; i<connections.length; i++)
+		for(z=0; z<connections.length; z++)
 		{
 			if(player==0)
 			{
-			document.getElementById(connections[i]).style.backgroundColor="#00cc00";
+			document.getElementById(connections[z]).style.backgroundColor="#00cc00";
 			}
 			else
 			{
-			document.getElementById(connections[i]).style.backgroundColor="#0000ff";
+			document.getElementById(connections[z]).style.backgroundColor="#0000ff";
 			}
 		}
 	}
